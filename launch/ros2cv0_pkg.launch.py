@@ -29,7 +29,7 @@ def generate_launch_description():
                 {'exposure': 150},             # Adjust exposure absolute value
                 
                 # --- Topic Configuration ---
-                {'camera_name': 'default_cam'},
+                {'camera_name': 'cam_pub'},
                 {'frame_id': 'camera_link'},
             ]
         ),
@@ -37,6 +37,10 @@ def generate_launch_description():
             package='ros2cv0_pkg',
             executable='image_view_exe',
             name='image_view',
-            output='screen'
+            output='screen',
+            # Passing the parameter to your custom image viewer node
+            parameters=[
+                {'camera_topic': '/cam_pub/image_raw'}
+            ]
         )
     ])

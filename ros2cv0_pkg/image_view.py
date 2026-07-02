@@ -12,10 +12,22 @@ class ImageViewer(Node):
         # Initialize the CvBridge utility
         self.bridge = CvBridge()
         
-        # Subscribe to the webcam stream topic published by usb_cam
-        # (Change '/image_raw' to '/camera' if you remapped the usb_cam output)
+        # Subscribe to the webcam stream topic published by usb_cam using a param for the topic name
+
+        # 1. Declare the parameter with a default topic name
+        self.declare_parameter('cam_topic', '/image_raw')
+        
+        # 2. Read the parameter value
+        cam_topic = self.get_parameter('cam_topic').value
+        
+        # 3. Terminate if the param configuration is empty or invalid
+        if not cam_topic or cam_topic.strip() == "":
+            self.get_logger().fatal("Camera topic parameter is empty! Terminating node.")
+            raise RuntimeError("Invalid camera topic configuration.")
+        
+        # 4. Subscribe to the topic retrieved from the parameter
         self.subscription = self.create_subscription(
-            Image, '/image_raw', self.listener_callback, 10)
+            Image, cam_topic, self.listener_callback, 10)
             
         self.get_logger().info('Image Viewer node started. Waiting for frames...')
 
