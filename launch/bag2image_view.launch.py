@@ -1,4 +1,3 @@
-from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import ExecuteProcess
 
@@ -9,13 +8,13 @@ def generate_launch_description():
     bag_file_path = 'PATH_TO_YOUR_BAG_FILE_DIRECTORY'
 
     # 2. Process to play the rosbag file
-    rosbag_play = ExecuteProcess(
+    ExecuteProcess(
         cmd=['ros2', 'bag', 'play', bag_file_path, '--loop'],  
         output='screen'
     )
 
     # 3. Your image viewer node listening to the bag file's topic
-    image_view_node = Node(
+    Node(
         package='ros2cv0_pkg',
         executable='image_view_exe',
         name='image_view',
