@@ -29,7 +29,7 @@ setup(
     },
     entry_points={
         'console_scripts': [ # package_name.node_file_name_without_py:main
-            'image_view_exe = ros2cv0_pkg.image_view:main',
+            'image_view_exe = ros2cv0_pkg.image_view_node:main',
         ],
     },
 )
