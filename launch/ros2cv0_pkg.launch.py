@@ -29,7 +29,10 @@ def generate_launch_description():
                 {'exposure': 150},             # Adjust exposure absolute value
                 
                 # --- Topic Configuration ---
-                {'camera_name': 'cam_pub'},
+                # The usb_cam ROS 2 package behaves slightly uniquely: changing camera_name changes the metadata internally, 
+                # but the node always publishes to the literal topic name /image_raw 
+                # Sunless you use a ROS 2 Remapping rule inside the launch file.
+                {'camera_name': 'default_cam'},
                 {'frame_id': 'camera_link'},
             ]
         ),
@@ -40,7 +43,7 @@ def generate_launch_description():
             output='screen',
             # Passing the parameter to your custom image viewer node
             parameters=[
-                {'camera_topic': '/cam_pub/image_raw'}
+                {'camera_topic': '/image_raw'}
             ]
         )
     ])
